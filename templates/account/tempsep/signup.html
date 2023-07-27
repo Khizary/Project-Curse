@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+
+<style>
+    #formdiv {
+        display: flex;
+        flex-direction: column;
+        margin: 0px auto;
+        box-sizing: content-box;
+        width: fit-content;
+        /* min-width: 40vw; */
+        font-size: smaller;
+    }
+
+    .button {
+        padding: 0.3rem;
+        border-width: 0.1rem;
+        font-size: small;
+        margin: 0.4rem;
+    }
+
+    form ul {
+        margin: 0.1rem auto;
+    }
+
+    input {
+        width: 100%;
+    }
+</style>
+<br>
+
+<div id="formdiv">
+    <h3 class="kjustify">Sign Up</h3>
+
+    <p class="kjustify">Already have an account?&nbsp<a href="{{ login_url }}">Sign In</a>.</p>
+    <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        {{ form.non_field_errors | safe }}
+        <input type="hidden" name="remember" value="true" />
+        <div>
+            <div>
+                {{ form.username.errors | safe }}
+                <label for="username" class="sr-only">Username</label>
+                {% render_field form.username %}
+            </div>
+            <div>
+                {{ form.email.errors | safe }}
+                <label for="email" class="sr-only">Username</label>
+                {% render_field form.email %}
+            </div>
+            <div>
+                {{ form.password1.errors | safe }}
+                <label for="id_password1" class="sr-only">Password</label>
+                {% render_field form.password1 %}
+            </div>
+            <div>
+                {{ form.password2.errors | safe }}
+                <label for="password2" class="sr-only">Password</label>
+                {% render_field form.password2 %}
+            </div>
+        </div>
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <button class="button" type="submit">Sign Up</button>
+    </form>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+
+<style>
+    #formdiv {
+        display: flex;
+        flex-direction: column;
+        margin: 0px auto;
+        box-sizing: content-box;
+        width: fit-content;
+        /* justify-content: center; */
+        /* min-width: 40vw; */
+        font-size: smaller;
+    }
+
+    .button {
+        padding: 0.3rem;
+        border-width: 0.1rem;
+        font-size: small;
+        margin: 0.4rem;
+    }
+
+    form ul {
+        margin: 0.1rem auto;
+    }
+
+</style>
+<div class="formdiv"></div>
+<h3>{% trans "Sign In" %}</h3>
+
+{% get_providers as socialaccount_providers %}
+
+{% if socialaccount_providers %}
+<p>{% blocktrans with site.name as site_name %}&nbsp;Please sign in with one
+of your existing third party accounts. Or&nbsp;<a href="{{ signup_url }}">sign up</a>&nbsp;for an account.{% endblocktrans %}</p>
+
+<div class="socialaccount_ballot">
+
+  <ul class="socialaccount_providers">
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+  </ul>
+
+  <div class="login-or">{% trans 'or' %}</div>
+
+</div>
+
+{% include "socialaccount/snippets/login_extra.html" %}
+
+{% else %}
+<p>{% blocktrans %}If you have not created an account yet&nbsp;
+<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+{% endif %}
+
+<form class="login" method="POST" action="{% url 'account_login' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <a class="button" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+  <button class="button" type="submit">{% trans "Sign In" %}</button>
+</form></div>
+
+{% endblock %}

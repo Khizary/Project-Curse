@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/mononoki.min.css">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet"> -->
+    <meta name="google" content="notranslate" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+</head>
+
+<body>
+
+    <style>
+
+        #maincont{
+            display: flex;
+            flex-direction: column;
+            box-sizing: content-box;
+            width: fit-content;
+            margin: 0 auto;
+        }
+        body {
+            font-family: 'mononoki', sans-serif;
+            /* font-weight: bolder; */
+            font-size: 16px;
+            background-color: #EFEFEF;
+        }
+        body p {
+            display: flex;
+            padding: 0 1rem;
+        }
+        .card-text{
+            font-size: smaller;
+        }
+
+        .paddedhead {
+            display: flex;
+            padding-left: 1rem;
+        }
+
+        .shadow {
+            box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #f00000;
+            border-color: #dc281e;
+        }
+
+        .masthead {
+            background: black;
+            height: auto;
+            padding-bottom: 15px;
+            box-shadow: 0 16px 48px #E3E7EB;
+            padding-top: 10px;
+        }
+        
+        input {
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #555;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        button, .button {
+            background: #FBCA1F;
+            font-family: inherit;
+            padding: 0.3em 0.75em;
+            font-weight: 900;
+            font-size: 18px;
+            color: black;
+            border: 3px solid black;
+            border-radius: 0.4em;
+            box-shadow: 0.1em 0.1em;
+
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button:hover, .button:hover {
+            transform: translate(-0.05em, -0.05em);
+            box-shadow: 0.15em 0.15em;
+            text-decoration: none;
+        }
+
+        button:active, .button:active {
+            transform: translate(0.05em, 0.05em);
+            box-shadow: 0.05em 0.05em;
+        }
+
+        label{
+            height: min-content;
+            margin: auto 0 ;
+            padding: 0.5rem;
+        }
+
+        .head_text {
+            color: white;
+            /* font-size: medium; */
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+        }
+
+
+        .papper {
+            position: relative;
+            box-sizing: border-box;
+            /* height: 200px; */
+            width: 300px;
+            background: #ffffff;
+            /* background-image: linear-gradient(#ffffff 1.1rem, #ccc 1.2rem); */
+            background-size: 100% 1.2rem;
+            border-radius: 10px;
+            /* cursor: move; */
+        }
+        .kjustify{
+            text-align: center;
+            text-justify: inter-word;
+            justify-content: center;
+        }
+
+        .papper:hover::before,
+        .papper:hover::after {
+            box-shadow: 0 2px 14px rgba(0, 0, 0, 0.4);
+        }
+        
+    </style>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow" id="mainNav">
+        <div class="container-fluid">
+            <a class="navbar-brand " href="{% url 'home' %}">C.U.R.S.E</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item text-black">
+                        <a class="nav-link text-black font-weight-bold" href="/about">About</a>
+                    </li>
+                    <li class="nav-item text-black">
+                        <a class="nav-link text-black font-weight-bold" href="/">Library</a>
+                    </li>
+                    <li class="nav-item text-black">
+                        <a href="mailto:khizar.sent@gmail.com" class="nav-link text-black font-weight-bold">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="maincont">
+    {% block content %}
+    <!-- Content Goes here -->
+    {% endblock content %}
+    <!-- Footer --></div>
+    <footer class="py-3 bg-grey">
+        <p class="m-0 text-dark text-center kjustify">Copyright &copy; C.U.R.S.E</p>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load filters %}
+<style>
+
+</style>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+        <br>
+        <h2 class="coolhead">{% block title %} {{ entry.name }} {% endblock title %}</h2>
+        <p class="deet-text text-dark mb-0">{{ entry.subject }} | {{ entry.level}} </p>
+        <p class="deet-text text-muted mb-0">{{ entry.author }} | {{ entry.created_on }}</p>
+        <hr>
+        <p class="deet-text">{{ entry.description | safe }}</p>
+        <!-- <p>{{entry.resourcelink}}</p> -->
+        {% if entry.resourcelink != None %}
+        {% with entry.resourcelink|split:"," as rslinks %}
+        {% for item in rslinks %}
+        <p><a id="hrefelem" href="{{ item }}" class="button" style="scale: 0.8;">Resource Link</a></p>
+        {% endfor %}
+        {% endwith %}
+        {% endif %}
+
+        {% if entry.embedlink != None %}
+        {% with entry.embedlink|split:"," as emlinks %}
+        {% for item in emlinks %}
+        <p><iframe id="iframeelem" width="560" height="315" src="{{ item }}" title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
+            allowfullscreen></iframe></p>
+        {% endfor %}
+        {% endwith %}
+        {% endif %}
+
+
+
+        <br>
+      </div>
+    </div>
+
+
+    <div class="col-md-8 card mb-4  mt-3 ">
+      <div class="card-body">
+        <!-- comments -->
+        <h5>{{ comments.count }} comments</h5>
+        {% for comment in comments %}
+        <div class="comments" style="padding: 10px; font-size: smaller;">
+          <p class="font-weight-normal text-muted">
+            {{ comment.name }}
+            <span class=" text-muted font-weight-normal">
+              &nbsp| {{ comment.created_on }}
+            </span>
+          </p>
+          {{ comment.body | linebreaks }}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-md-8 card mb-4  mt-3 ">
+      <div class="card-body">
+        {% if new_comment %}
+        <div class="alert alert-success" role="alert">
+          Your comment is awaiting moderation.
+        </div>
+        {% else %}
+        <h6>Leave a comment: </h6>
+        <form method="post" style="margin-top: 1.3em;">
+          {{ comment_form.as_p }}
+          {% csrf_token %}
+          <!-- <label for="id_body">Comment:</label> -->
+          <!-- <label for=""></label> -->
+          <button type="submit" class="button" style="scale: 0.7;">Submit</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
