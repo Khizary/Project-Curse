@@ -33,7 +33,7 @@ ALLOWED_HOSTS = [
     'project-curse.up.railway.app',
 ]
 CSRF_TRUSTED_ORIGINS = [
-    'https://project-curse.up.railway.app/',
+    'https://project-curse.up.railway.app',
 ]
 
 # Application definition
