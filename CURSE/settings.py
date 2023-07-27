@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-s4as#ah&d==x4y(o*u2e-=f(18ix&%kb-men-sty&5#0x#s*w0
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'project-curse.up.railway.app/',
+    'project-curse.up.railway.app',
 ]
 
 
