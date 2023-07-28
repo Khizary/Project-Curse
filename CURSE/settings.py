@@ -29,12 +29,8 @@ SECRET_KEY = 'django-insecure-s4as#ah&d==x4y(o*u2e-=f(18ix&%kb-men-sty&5#0x#s*w0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'project-curse.up.railway.app',
-]
-CSRF_TRUSTED_ORIGINS = [
-    'https://project-curse.up.railway.app',
-]
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,[::1]").split(",")
+CSRF_TRUSTED_ORIGINS = ["https://"+ str(os.getenv("DJANGO_ALLOWED_HOSTS"))]
 
 # Application definition
 
