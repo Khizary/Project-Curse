@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 from pathlib import Path
+from django.core.management.utils import get_random_secret_key
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,10 +26,11 @@ LOGIN_REDIRECT_URL='/'
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-s4as#ah&d==x4y(o*u2e-=f(18ix&%kb-men-sty&5#0x#s*w0'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', get_random_secret_key())
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,[::1]").split(",")
 CSRF_TRUSTED_ORIGINS = ["https://"+ str(os.getenv("DJANGO_ALLOWED_HOSTS"))]
@@ -85,14 +88,21 @@ WSGI_APPLICATION = 'CURSE.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+if os.getenv("DJANGO_DATABASE_URL", None) is None:
+    raise Exception("DJANGO_DATABASE_URL environment variable not defined")
+
+DB_PARAMS = dj_database_url.parse(os.environ.get("DJANGO_DATABASE_URL"))
+DB_PARAMS["ENGINE"] = "custom_db_backends.vitess"
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": DB_PARAMS,
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
