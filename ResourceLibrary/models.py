@@ -14,22 +14,23 @@ RESTYPE = (
     (0,"Detailed Notes"),
     (1,"Tools"),
     (2,"Revision Notes"),
-    (3,"Endorsed Educationists"),
-    (4, "Conceptual Resources")
+    (3,"Formula Sheets"),
+    (4,"Concept Clarification"),
+    (5,"Other"),
 )
 
 class Subject(models.Model):
-    name = models.CharField(max_length =20)
+    name = models.CharField(max_length =50)
     def __str__(self):
         return self.name
 
 class Level(models.Model):
-    name = models.CharField(max_length =20)
+    name = models.CharField(max_length =50)
     def __str__(self):
         return self.name
 
 class Entry(models.Model):
-    name = models.CharField(max_length=200, unique=True)
+    name = models.CharField(max_length=100, unique=True)
     author = models.ForeignKey(User, on_delete= models.SET("Deleted User"),related_name='resource_entries')
     description = models.TextField()
     slug = models.SlugField(max_length=200, unique=True)
@@ -38,9 +39,13 @@ class Entry(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
     level = models.ForeignKey(Level, on_delete=models.PROTECT)
 
-    resourcelink = models.URLField(("ResourceURLs"), max_length=500, null=True,blank=True)
-    embedlink = models.URLField(("VideoURLs"), max_length=500, null=True, blank=True)
+    resourcelink = models.URLField(("ResourceURLs"), max_length=1000, null=True,blank=True)
+    embedlink = models.URLField(("VideoURLs"), max_length=1000, null=True, blank=True)
     affiliateflag = models.BooleanField(("Paid Promotion"),default=False)
+    customhtml = models.TextField(("Custom HTML Code"),blank=True, null=True)
+    extracontrib = models.CharField(("Extra Contributor Credits"),max_length=100, blank=True, null=True)
+
+
 
     class Meta:
         ordering = ['-created_on']

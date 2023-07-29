@@ -13,6 +13,9 @@
         <h2 class="coolhead">{% block title %} {{ entry.name }} {% endblock title %}</h2>
         <p class="deet-text text-dark mb-0">{{ entry.subject }} | {{ entry.level}} </p>
         <p class="deet-text text-muted mb-0">{{ entry.author }} | {{ entry.created_on }}</p>
+        {% if entry.affiliatetag == True %}
+        <p class="deet-text text-muted mb-0">Paid Promotion</p>
+        {% endif %}
         <hr>
         <p class="deet-text">{{ entry.description | safe }}</p>
         <!-- <p>{{entry.resourcelink}}</p> -->
@@ -35,6 +38,14 @@
         {% endwith %}
         {% endif %}
 
+        {% if entry.customhtml != None %}
+        <p><div id="customcode">{{ entry.customhtml }}</div></p>
+        {% endif %}
+
+        {% if entry.extracontrib != None %}
+        <p class="deet-text text-muted mb-0">Credits:&nbsp;{{ entry.extracontrib }}</p>
+          <br>
+        {% endif %}
 
 
         <br>
