@@ -34,7 +34,7 @@ class SearchResultsView(generic.ListView):
         )
         return object_list
 
-@login_required
+# @login_required
 def entry_detail(request, slug):
     template_name = 'entry_detail.html'
     entry = get_object_or_404(Entry, slug=slug)
@@ -43,7 +43,7 @@ def entry_detail(request, slug):
     # user = User.get_username(User)
     # user_email = User.objects.get()
     # Comment posted
-    if request.method == 'POST':
+    if request.method == 'POST' and request.user.is_authenticated:
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
 

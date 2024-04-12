@@ -241,6 +241,15 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item text-black">
+                        <a href="{% url 'account_logout' %}" class="nav-link text-black font-weight-bold">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item text-black">
+                        <a href="{% url 'account_login' %}" class="nav-link text-black font-weight-bold">Login</a>
+                    </li>
+                    {% endif %}
                     <li class="nav-item text-black">
                         <a class="nav-link text-black font-weight-bold" href="/about">About</a>
                     </li>
@@ -250,6 +259,8 @@
                     <li class="nav-item text-black">
                         <a href="mailto:khizar.sent@gmail.com" class="nav-link text-black font-weight-bold">Contact</a>
                     </li>
+                    
+                    
                 </ul>
             </div>
         </div>

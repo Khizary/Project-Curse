@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 from django.core.management.utils import get_random_secret_key
-import dj_database_url
+# import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,8 +30,9 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', get_random_secret_key())
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
-# DEBUG=True
+# DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
+
+DEBUG=True
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,[::1]").split(",")
 CSRF_TRUSTED_ORIGINS = ["https://"+ str(os.getenv("DJANGO_ALLOWED_HOSTS"))]
@@ -63,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'CURSE.urls'
@@ -96,14 +98,44 @@ WSGI_APPLICATION = 'CURSE.wsgi.application'
 #     }
 # }
 
-if os.getenv("DJANGO_DATABASE_URL", None) is None:
-    raise Exception("DJANGO_DATABASE_URL environment variable not defined")
+# if os.getenv("DJANGO_DATABASE_URL", None) is None:
+#     raise Exception("DJANGO_DATABASE_URL environment variable not defined")
 
-DB_PARAMS = dj_database_url.parse(os.environ.get("DJANGO_DATABASE_URL"))
-DB_PARAMS["ENGINE"] = "custom_db_backends.vitess"
+# PSQL_URL = os.environ.get("PSQL_URL")
+pgpass = os.environ.get("PG_PASS")
+# pgsrvc = os.environ.get("PG_SERVICE")
+
+
+pgarr = pgpass.split(':')
+
+
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "OPTIONS": {
+#             "service": pgsrvc,
+#             "passfile": pgpass,
+#         },
+#     }
+# }
 DATABASES = {
-    "default": DB_PARAMS,
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': pgarr[2], 
+        'USER': pgarr[3],
+        'PASSWORD': pgarr[4],
+        'HOST': pgarr[0], 
+        'PORT': pgarr[1],
+    }
 }
+
+
+# DB_PARAMS = dj_database_url.parse(os.environ.get("DJANGO_DATABASE_URL"))
+# DB_PARAMS["ENGINE"] = "custom_db_backends.vitess"
+# DATABASES = {
+#     "default": DB_PARAMS,
+# }
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 

@@ -76,7 +76,7 @@
         <div class="alert alert-success" role="alert">
           Your comment is awaiting moderation.
         </div>
-        {% else %}
+        {% elif request.user.is_authenticated %}
         <h6>Leave a comment: </h6>
         <form method="post" style="margin-top: 1.3em;">
           {{ comment_form.as_p }}
@@ -85,6 +85,12 @@
           <!-- <label for=""></label> -->
           <button type="submit" class="button" style="scale: 0.7;">Submit</button>
         </form>
+
+        {% else %}
+        <h6> Log in to leave a comment! </h6>
+        <br>
+        <a href="{% url 'account_login' %}?next={{ request.build_absolute_uri }}" class="button" >Login</a>.
+        <!-- <button type="submit" class="button" style="scale: 0.7;">Submit</button> -->
         {% endif %}
       </div>
     </div>
